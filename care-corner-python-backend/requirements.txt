@@ -1,0 +1,7 @@
+Flask==2.3.2
+Flask-Cors==4.0.0
+psycopg2-binary==2.9.6
+argon2-cffi==21.3.0
+python-dotenv==1.0.0 # Used for local .env files, not strictly needed for Railway
+Werkzeug==2.3.6
+gunicorn==21.2.0     # Production WSGI server required by Railway

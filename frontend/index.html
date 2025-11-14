@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Care Corner - Your Safe Space</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+    </div>
+
+    <button class="theme-toggle" id="themeToggle">
+        <span class="theme-icon">🌙</span>
+    </button>
+
+    <div class="user-menu" id="userMenu">
+        <div class="user-name" id="userName"></div>
+        <button class="logout-btn" id="logoutBtn">Logout</button>
+    </div>
+
+    <div class="container">
+        <!-- Login Page -->
+        <div id="loginPage" class="page active">
+            <div class="auth-container">
+                <h2>Welcome Back!</h2>
+                <p>Sign in to continue your journey</p>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="btn">Sign In</button>
+                </form>
+                <div class="auth-switch">
+                    Don't have an account? <a id="showSignup">Sign up here</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Signup Page -->
+        <div id="signupPage" class="page">
+            <div class="auth-container">
+                <h2>Join Care Corner</h2>
+                <p>Create your safe space account</p>
+                <form id="signupForm">
+                    <div class="form-group">
+                        <label for="signupName">Display Name</label>
+                        <input type="text" id="signupName" placeholder="How should we call you?" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupEmail">Email</label>
+                        <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPassword">Password</label>
+                        <input type="password" id="signupPassword" placeholder="Create a password" required>
+                    </div>
+                    <button type="submit" class="btn">Create Account</button>
+                </form>
+                <div class="auth-switch">
+                    Already have an account? <a id="showLogin">Sign in here</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main App Header (shown after login) -->
+        <div id="appHeader" style="display: none;">
+            <div class="header">
+                <div class="logo">Care Corner <span class="heart-icon">❤</span></div>
+                <div class="tagline">A warm, safe space where you're never alone</div>
+            </div>
+
+            <div class="nav">
+                <button class="nav-btn" id="homeBtn">🏠 Home</button>
+                <button class="nav-btn" id="dashboardBtn">📊 My Dashboard</button>
+                <button class="nav-btn" id="newPostBtn">✍️ Share Your Story</button>
+            </div>
+        </div>
+
+        <!-- Home Page -->
+        <div id="homePage" class="page">
+            <div style="max-width: 1100px; margin: 0 auto 30px;">
+                <div style="background: white; border-radius: 20px; padding: 20px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08); display: flex; align-items: center; gap: 15px;">
+                    <label for="categoryFilter" style="font-weight: 600; color: #4a4a4a; white-space: nowrap;">Filter by:</label>
+                    <select id="categoryFilter" style="flex: 1; max-width: 300px; padding: 12px 18px; background: #f9f9f9; border: 2px solid #e8e8e8; border-radius: 15px; color: #4a4a4a; font-size: 15px; cursor: pointer; transition: all 0.3s ease;">
+                        <option value="All">🌟 All Posts</option>
+                        <option value="Mental Health">💭 Mental Health</option>
+                        <option value="Career">💼 Career</option>
+                        <option value="Academics">📚 Academics</option>
+                        <option value="Relationships">💕 Relationships</option>
+                        <option value="General">💬 General</option>
+                    </select>
+                    <span id="postCount" style="color: #7a7a7a; font-size: 14px;"></span>
+                </div>
+            </div>
+            <div id="postsContainer"></div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div id="dashboardPage" class="page">
+            <div class="dashboard-header">
+                <h2>Your Dashboard</h2>
+                <p>Manage your posts and track your contributions to the community</p>
+                <div class="dashboard-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" id="totalPosts">0</div>
+                        <div class="stat-label">Total Posts</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="totalComments">0</div>
+                        <div class="stat-label">Comments Received</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="anonymousPosts">0</div>
+                        <div class="stat-label">Anonymous Posts</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="my-posts-section">
+                <h3>Your Posts</h3>
+                <div id="myPostsContainer"></div>
+            </div>
+        </div>
+
+        <!-- New Post Page -->
+        <div id="newPostPage" class="page">
+            <div class="form-container">
+                <h2>Share What's on Your Mind</h2>
+                <div class="support-message">
+                    💝 You're not alone. Whatever you're feeling is valid. This community is here to listen and support you.
+                </div>
+                <form id="postForm">
+                    <div class="form-group">
+                        <label for="postTitle">Give your post a title (optional)</label>
+                        <input type="text" id="postTitle" placeholder="e.g., Feeling anxious about tomorrow...">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="postCategory">What's this about?</label>
+                        <select id="postCategory" required>
+                            <option value="">Choose a category</option>
+                            <option value="Mental Health">💭 Mental Health</option>
+                            <option value="Career">💼 Career</option>
+                            <option value="Academics">📚 Academics</option>
+                            <option value="Relationships">💕 Relationships</option>
+                            <option value="General">💬 General</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="postContent">Share your thoughts</label>
+                        <textarea id="postContent" placeholder="Take your time. Express yourself freely. We're here to listen and support you, not judge." required></textarea>
+                    </div>
+
+                    <div class="form-group checkbox">
+                        <input type="checkbox" id="postAnonymous">
+                        <label for="postAnonymous">Post anonymously (your identity will be hidden)</label>
+                    </div>
+                    
+                    <button type="submit" class="btn">Post</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Post Detail Page -->
+        <div id="postDetailPage" class="page">
+            <button class="btn back-btn" id="backBtn">← Back to Community</button>
+            
+            <div id="postDetailContent" class="post-detail"></div>
+            
+            <div class="comments-section">
+                <h3>Support & Responses</h3>
+                
+                <div class="kind-reminder">
+                    💕 <strong>Be kind.</strong> This is a safe and supportive space for everyone.
+                </div>
+                
+                <form id="commentForm">
+                    <div class="form-group">
+                        <label for="commentContent">Offer your support</label>
+                        <textarea id="commentContent" placeholder="Share words of encouragement, advice, or simply let them know they're heard..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Send Support</button>
+                </form>
+                <div id="commentWarning"></div>
+                <div id="commentWarning"></div>
+                <div id="commentsContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

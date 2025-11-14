@@ -1,0 +1,1316 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Caveat:wght@400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #fef3e2 0%, #fae8d4 50%, #f5dfd0 100%);
+    color: #4a4a4a;
+    overflow-x: hidden;
+    position: relative;
+    transition: background 0.5s ease, color 0.5s ease;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+body.dark-mode {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: #e8e8e8;
+}
+
+.background-shapes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.shape {
+    position: absolute;
+    opacity: 0.15;
+    animation: gentleFloat 25s infinite ease-in-out;
+}
+
+.shape1 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, #ffb5a7, transparent);
+    top: 10%;
+    left: 5%;
+    border-radius: 40% 60% 70% 30%;
+}
+
+.shape2 {
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, #a8d8ea, transparent);
+    bottom: 15%;
+    right: 10%;
+    border-radius: 60% 40% 30% 70%;
+    animation-delay: 8s;
+}
+
+.shape3 {
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, #c9ada7, transparent);
+    top: 60%;
+    left: 15%;
+    border-radius: 30% 70% 70% 30%;
+    animation-delay: 16s;
+}
+
+@keyframes gentleFloat {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(30px, -30px) rotate(5deg); }
+    66% { transform: translate(-20px, 20px) rotate(-5deg); }
+}
+
+body.dark-mode .shape1 { background: radial-gradient(circle, #5c4a72, transparent); }
+body.dark-mode .shape2 { background: radial-gradient(circle, #3d5a80, transparent); }
+body.dark-mode .shape3 { background: radial-gradient(circle, #6b4e71, transparent); }
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.theme-toggle {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+}
+
+body.dark-mode .theme-toggle {
+    background: #2a2a3e;
+}
+
+.theme-icon {
+    font-size: 24px;
+}
+
+.user-menu {
+    position: fixed;
+    top: 25px;
+    right: 90px;
+    display: none;
+    align-items: center;
+    gap: 15px;
+    z-index: 1000;
+}
+
+.user-menu.show {
+    display: flex;
+}
+
+.user-name {
+    background: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 500;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .user-name {
+    background: #2a2a3e;
+    color: #e8e8e8;
+}
+
+.logout-btn {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(255, 154, 158, 0.3);
+}
+
+.logout-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 154, 158, 0.4);
+}
+
+body.dark-mode .logout-btn {
+    background: linear-gradient(135deg, #c96567 0%, #cb7b8d 100%);
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.logo {
+    font-family: 'Caveat', cursive;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #d87c7c;
+    margin-bottom: 8px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+body.dark-mode .logo {
+    color: #f4a3a3;
+}
+
+.heart-icon {
+    display: inline-block;
+    color: #ff6b9d;
+    margin: 0 5px;
+    animation: heartbeat 2s infinite;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    10%, 30% { transform: scale(1.1); }
+    20%, 40% { transform: scale(1); }
+}
+
+.tagline {
+    font-size: 1.15rem;
+    color: #7a7a7a;
+    font-weight: 400;
+    font-style: italic;
+}
+
+body.dark-mode .tagline {
+    color: #b8b8b8;
+}
+
+.nav {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.nav-btn {
+    padding: 12px 28px;
+    background: white;
+    border: 2px solid #e8e8e8;
+    color: #4a4a4a;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-color: #d87c7c;
+}
+
+.nav-btn.active {
+    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+    border-color: transparent;
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 154, 158, 0.3);
+}
+
+body.dark-mode .nav-btn {
+    background: #2a2a3e;
+    border-color: #3a3a4e;
+    color: #e8e8e8;
+}
+
+body.dark-mode .nav-btn:hover {
+    border-color: #d87c7c;
+}
+
+body.dark-mode .nav-btn.active {
+    background: linear-gradient(135deg, #c96567 0%, #cb7b8d 100%);
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Auth Pages */
+.auth-container {
+    max-width: 450px;
+    margin: 60px auto;
+    background: white;
+    border-radius: 25px;
+    padding: 50px 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .auth-container {
+    background: #2a2a3e;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.auth-container h2 {
+    font-family: 'Caveat', cursive;
+    font-size: 32px;
+    color: #d87c7c;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+body.dark-mode .auth-container h2 {
+    color: #f4a3a3;
+}
+
+.auth-container p {
+    text-align: center;
+    color: #7a7a7a;
+    margin-bottom: 30px;
+}
+
+body.dark-mode .auth-container p {
+    color: #b8b8b8;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #4a4a4a;
+    font-size: 14px;
+}
+
+body.dark-mode .form-group label {
+    color: #e8e8e8;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 14px 18px;
+    background: #f9f9f9;
+    border: 2px solid #e8e8e8;
+    border-radius: 15px;
+    color: #4a4a4a;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #ff9a9e;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(255, 154, 158, 0.1);
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group select,
+body.dark-mode .form-group textarea {
+    background: #1a1a2e;
+    border-color: #3a3a4e;
+    color: #e8e8e8;
+}
+
+body.dark-mode .form-group input:focus,
+body.dark-mode .form-group select:focus,
+body.dark-mode .form-group textarea:focus {
+    border-color: #c96567;
+    background: #16213e;
+    box-shadow: 0 0 0 4px rgba(201, 101, 103, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 140px;
+}
+
+.form-group.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group.checkbox input[type="checkbox"] {
+    width: auto;
+    cursor: pointer;
+}
+
+.form-group.checkbox label {
+    margin: 0;
+    cursor: pointer;
+}
+
+.btn {
+    width: 100%;
+    padding: 14px 35px;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 154, 158, 0.3);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 154, 158, 0.4);
+}
+
+body.dark-mode .btn {
+    background: linear-gradient(135deg, #c96567 0%, #cb7b8d 100%);
+}
+
+.auth-switch {
+    text-align: center;
+    margin-top: 20px;
+    color: #7a7a7a;
+}
+
+body.dark-mode .auth-switch {
+    color: #b8b8b8;
+}
+
+.auth-switch a {
+    color: #d87c7c;
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+body.dark-mode .auth-switch a {
+    color: #f4a3a3;
+}
+
+/* Dashboard */
+.dashboard-header {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+}
+
+body.dark-mode .dashboard-header {
+    background: #2a2a3e;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+}
+
+.dashboard-header h2 {
+    font-family: 'Caveat', cursive;
+    font-size: 28px;
+    color: #d87c7c;
+    margin-bottom: 10px;
+}
+
+body.dark-mode .dashboard-header h2 {
+    color: #f4a3a3;
+}
+
+.dashboard-stats {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: #d87c7c;
+}
+
+body.dark-mode .stat-number {
+    color: #f4a3a3;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #7a7a7a;
+}
+
+body.dark-mode .stat-label {
+    color: #b8b8b8;
+}
+
+.my-posts-section {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+}
+
+body.dark-mode .my-posts-section {
+    background: #2a2a3e;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+}
+
+.my-posts-section h3 {
+    font-family: 'Caveat', cursive;
+    font-size: 24px;
+    color: #d87c7c;
+    margin-bottom: 20px;
+}
+
+body.dark-mode .my-posts-section h3 {
+    color: #f4a3a3;
+}
+
+.my-post-card {
+    background: #f9f9f9;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 15px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+body.dark-mode .my-post-card {
+    background: #1a1a2e;
+}
+
+.my-post-card:hover {
+    border-color: #fad0c4;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+body.dark-mode .my-post-card:hover {
+    border-color: #c96567;
+}
+
+.my-post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 10px;
+    gap: 15px;
+}
+
+.my-post-info {
+    flex: 1;
+}
+
+.my-post-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+body.dark-mode .my-post-title {
+    color: #f0f0f0;
+}
+
+.my-post-meta {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.my-post-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.view-comments-btn {
+    padding: 8px 18px;
+    background: linear-gradient(135deg, #a8c0ff, #c2e9fb);
+    border: none;
+    border-radius: 20px;
+    color: #4a5f8e;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.view-comments-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(168, 192, 255, 0.3);
+}
+
+.my-post-comments {
+    display: none;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #e8e8e8;
+    animation: slideDown 0.3s ease;
+}
+
+.my-post-comments.show {
+    display: block;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+body.dark-mode .my-post-comments {
+    border-top-color: #3a3a4e;
+}
+
+.my-post-comments h4 {
+    font-size: 16px;
+    color: #d87c7c;
+    margin-bottom: 15px;
+}
+
+body.dark-mode .my-post-comments h4 {
+    color: #f4a3a3;
+}
+
+.mini-comment {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-left: 3px solid #ff9a9e;
+}
+
+body.dark-mode .mini-comment {
+    background: #16213e;
+    border-left-color: #c96567;
+}
+
+.mini-comment-meta {
+    font-size: 11px;
+    color: #999;
+    margin-bottom: 8px;
+}
+
+body.dark-mode .mini-comment-meta {
+    color: #b8b8b8;
+}
+
+.mini-comment-content {
+    color: #555;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+body.dark-mode .mini-comment-content {
+    color: #d0d0d0;
+}
+
+.kind-reminder {
+    background: linear-gradient(135deg, #fff9f0 0%, #ffe8e0 100%);
+    border-left: 4px solid #ff9a9e;
+    padding: 12px 18px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #7a5959;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+body.dark-mode .kind-reminder {
+    background: linear-gradient(135deg, #3a3a4e 0%, #4a3f4f 100%);
+    border-left-color: #c96567;
+    color: #e8d0d0;
+}
+
+.warning-message {
+    background: linear-gradient(135deg, #fff0f0 0%, #ffe0e0 100%);
+    border-left: 4px solid #ff6b6b;
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #c93a3a;
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+body.dark-mode .warning-message {
+    background: linear-gradient(135deg, #4a3a3a 0%, #5a3f3f 100%);
+    border-left-color: #ff5252;
+    color: #ff8888;
+}
+
+.anonymous-badge {
+    background: linear-gradient(135deg, #c3cfe2, #c3cfe2);
+    color: #5c6e7a;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.delete-btn {
+    padding: 8px 18px;
+    background: #ff6b6b;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.delete-btn:hover {
+    background: #ff5252;
+    transform: translateY(-2px);
+}
+
+.support-message {
+    background: linear-gradient(135deg, #fff9f0 0%, #ffe8e0 100%);
+    border-left: 4px solid #ff9a9e;
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    font-size: 14px;
+    color: #7a5959;
+}
+
+body.dark-mode .support-message {
+    background: linear-gradient(135deg, #3a3a4e 0%, #4a3f4f 100%);
+    border-left-color: #c96567;
+    color: #e8d0d0;
+}
+
+/* Posts Grid */
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+}
+
+.post-card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.post-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.post-card:hover::before {
+    opacity: 1;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    border-color: #fad0c4;
+}
+
+body.dark-mode .post-card {
+    background: #2a2a3e;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .post-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    border-color: #c96567;
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 10px;
+}
+
+.post-category {
+    padding: 5px 14px;
+    border-radius: 15px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.category-mental-health { background: linear-gradient(135deg, #a8c0ff, #c2e9fb); color: #4a5f8e; }
+.category-career { background: linear-gradient(135deg, #fbc2eb, #a6c1ee); color: #6b5b95; }
+.category-academics { background: linear-gradient(135deg, #fdcbf1, #e6dee9); color: #7c5295; }
+.category-relationships { background: linear-gradient(135deg, #ffecd2, #fcb69f); color: #8e5a3e; }
+.category-general { background: linear-gradient(135deg, #c3cfe2, #c3cfe2); color: #5c6e7a; }
+
+.post-time {
+    color: #999;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+body.dark-mode .post-time {
+    color: #b8b8b8;
+}
+
+.post-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+    line-height: 1.4;
+}
+
+body.dark-mode .post-title {
+    color: #f0f0f0;
+}
+
+.post-preview {
+    color: #666;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+body.dark-mode .post-preview {
+    color: #c0c0c0;
+}
+
+.form-container {
+    max-width: 650px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 25px;
+    padding: 40px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .form-container {
+    background: #2a2a3e;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+}
+
+.form-container h2 {
+    margin-bottom: 30px;
+    font-size: 26px;
+    color: #d87c7c;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+}
+
+body.dark-mode .form-container h2 {
+    color: #f4a3a3;
+}
+
+.post-detail {
+    max-width: 750px;
+    margin: 0 auto 35px;
+    background: white;
+    border-radius: 25px;
+    padding: 40px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .post-detail {
+    background: #2a2a3e;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+}
+
+.post-detail-header {
+    border-bottom: 2px solid #f5f5f5;
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+}
+
+body.dark-mode .post-detail-header {
+    border-bottom-color: #3a3a4e;
+}
+
+.post-detail-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #333;
+    line-height: 1.3;
+}
+
+body.dark-mode .post-detail-title {
+    color: #f0f0f0;
+}
+
+.post-detail-meta {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.post-detail-content {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #555;
+}
+
+body.dark-mode .post-detail-content {
+    color: #d0d0d0;
+}
+
+.comments-section {
+    max-width: 750px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 25px;
+    padding: 40px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .comments-section {
+    background: #2a2a3e;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+}
+
+.comments-section h3 {
+    margin-bottom: 25px;
+    font-size: 22px;
+    color: #d87c7c;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+}
+
+body.dark-mode .comments-section h3 {
+    color: #f4a3a3;
+}
+
+.comment {
+    background: #f9f9f9;
+    border-left: 4px solid #ff9a9e;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 18px;
+    transition: all 0.3s ease;
+}
+
+.comment:hover {
+    background: #f5f5f5;
+    transform: translateX(5px);
+}
+
+body.dark-mode .comment {
+    background: #1a1a2e;
+    border-left-color: #c96567;
+}
+
+body.dark-mode .comment:hover {
+    background: #16213e;
+}
+
+.comment-meta {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+body.dark-mode .comment-meta {
+    color: #b8b8b8;
+}
+
+.comment-content {
+    color: #555;
+    line-height: 1.7;
+}
+
+body.dark-mode .comment-content {
+    color: #d0d0d0;
+}
+
+.back-btn {
+    margin-bottom: 25px;
+    background: white;
+    border: 2px solid #e8e8e8;
+    color: #4a4a4a;
+    width: auto;
+}
+
+body.dark-mode .back-btn {
+    background: #2a2a3e;
+    border-color: #3a3a4e;
+    color: #e8e8e8;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.empty-state h3 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #d87c7c;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+}
+
+body.dark-mode .empty-state h3 {
+    color: #f4a3a3;
+}
+
+.empty-state p {
+    font-size: 16px;
+    color: #7a7a7a;
+    margin-bottom: 25px;
+}
+
+body.dark-mode .empty-state p {
+    color: #b8b8b8;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px 15px;
+    }
+
+    .logo {
+        font-size: 2.8rem;
+    }
+
+    .posts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-container,
+    .form-container,
+    .post-detail,
+    .comments-section {
+        padding: 30px 25px;
+    }
+
+    .nav {
+        flex-direction: column;
+    }
+
+    .post-header,
+    .my-post-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .user-menu {
+        flex-direction: column;
+        top: 85px;
+        right: 25px;
+    }
+
+    .dashboard-stats {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+/* Prevent long words/URLs from breaking layout and keep previews tidy */
+.post-title,
+.post-preview,
+.post-detail-content,
+.my-post-card .post-preview,
+.comment-content,
+.mini-comment-content,
+.mini-comment-meta {
+  white-space: pre-wrap;        /* preserve newlines but wrap text */
+  overflow-wrap: anywhere;      /* break extremely long words/URLs if needed */
+  word-break: break-word;
+}
+
+/* Truncate preview height so cards remain consistent */
+.post-preview {
+  max-height: 6.2em; /* ~3-4 lines - adjust if you want more/less */
+  overflow: hidden;
+}
+
+/* Hide dashboard comment blocks by default; show when .show is added */
+.my-post-comments {
+  display: none;
+  margin-top: 12px;
+}
+
+/* Visible when toggled */
+.my-post-comments.show {
+  display: block;
+}
+
+/* Ensure card containers don't force overflow in some layouts */
+.post-card, .my-post-card {
+  min-height: 0;
+  box-sizing: border-box;
+}
+/* ===== COMPLETE OVERFLOW FIXES - ADD AT THE END OF YOUR CSS ===== */
+
+/* Fix for all post cards and containers */
+.post-card,
+.my-post-card,
+.post-detail,
+.form-container,
+.comments-section {
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    overflow: hidden !important;
+}
+
+/* Fix for post content areas */
+.post-preview,
+.post-detail-content,
+.my-post-card .post-preview {
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    white-space: pre-wrap !important;
+    overflow: hidden !important;
+    max-width: 100% !important;
+}
+
+/* Fix for titles */
+.post-title,
+.my-post-title,
+.post-detail-title {
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    overflow: hidden !important;
+    max-width: 100% !important;
+}
+
+/* Override the existing my-post-comments styles */
+.my-post-comments {
+    display: none !important;
+    margin-top: 20px !important;
+    padding: 15px !important;
+    background: rgba(0, 0, 0, 0.02) !important;
+    border-radius: 10px !important;
+    border-top: none !important; /* Remove the border-top */
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    animation: none !important; /* Remove animation to avoid conflicts */
+}
+
+.my-post-comments.show {
+    display: block !important;
+}
+
+body.dark-mode .my-post-comments {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-top: none !important;
+}
+
+/* Fix for individual comment boxes in dashboard */
+.mini-comment {
+    padding: 12px !important;
+    margin-bottom: 10px !important;
+    background: white !important;
+    border-radius: 8px !important;
+    border-left: 3px solid #ff9a9e !important;
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+}
+
+body.dark-mode .mini-comment {
+    background: #16213e !important;
+    border-left-color: #c96567 !important;
+}
+
+/* Fix comment content specifically */
+.mini-comment-content,
+.comment-content {
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    white-space: pre-wrap !important;
+    line-height: 1.5 !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    display: block !important;
+}
+
+.mini-comment-meta,
+.comment-meta {
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    font-size: 11px !important;
+    color: #999 !important;
+    margin-bottom: 8px !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    display: block !important;
+}
+
+body.dark-mode .mini-comment-meta {
+    color: #b8b8b8 !important;
+}
+
+/* Fix for textareas in forms */
+#postContent,
+#commentContent {
+    word-wrap: break-word !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    resize: vertical !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Ensure form containers don't overflow */
+.form-group textarea,
+.form-group input,
+.form-group select {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Fix for new post form container */
+.form-container {
+    max-width: 650px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+}
+
+/* Additional safety for all text content */
+.my-post-card *,
+.post-card *,
+.comment *,
+.mini-comment {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Make sure long category names don't break layout */
+.post-category {
+    max-width: 150px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+/* Ensure buttons in dashboard don't cause overflow */
+.my-post-actions {
+    display: flex !important;
+    gap: 10px !important;
+    flex-wrap: wrap !important;
+    flex-shrink: 0 !important;
+}
+
+.view-comments-btn,
+.delete-btn {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    flex-shrink: 0 !important;
+}
+
+/* Fix the header spacing in dashboard posts */
+.my-post-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    margin-bottom: 10px !important;
+    gap: 15px !important;
+    flex-wrap: wrap !important;
+}
+
+.my-post-info {
+    flex: 1 !important;
+    min-width: 0 !important; /* This is crucial for text truncation */
+    overflow: hidden !important;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .my-post-card,
+    .post-card {
+        padding: 15px !important;
+    }
+    
+    .my-post-header {
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+    
+    .my-post-actions {
+        width: 100% !important;
+        justify-content: flex-start !important;
+    }
+    
+    .my-post-comments {
+        padding: 10px !important;
+    }
+}
