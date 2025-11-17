@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:5000/api'; 
+const API_BASE = 'https://care-corner-production.up.railway.app/api'; 
 // Data storage
 let currentUser = null;
 let currentPostId = null;
