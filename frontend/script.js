@@ -1,3 +1,4 @@
+const API_BASE = 'http://localhost:5000/api'; 
 // Data storage
 let currentUser = null;
 let currentPostId = null;
@@ -90,7 +91,7 @@ async function handleLogin(e) {
     const password = document.getElementById('loginPassword').value;
     
     try {
-        const response = await fetch('http://localhost:5000/api/login', {
+        const response = await fetch(`${API_BASE}/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -123,7 +124,7 @@ async function handleSignup(e) {
     const password = document.getElementById('signupPassword').value;
     
     try {
-        const response = await fetch('http://localhost:5000/api/register', {
+        const response = await fetch(`${API_BASE}/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -202,7 +203,7 @@ async function handlePostSubmit(e) {
     }
     
     try {
-        const response = await fetch('http://localhost:5000/api/posts', {
+        const response = await fetch(`${API_BASE}/posts`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -254,7 +255,7 @@ async function handleCommentSubmit(e) {
     warningDiv.innerHTML = '';
     
     try {
-        const response = await fetch(`http://localhost:5000/api/posts/${currentPostId}/comments`, {
+        const response = await fetch(`${API_BASE}/posts/${postId}/comments`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -284,7 +285,7 @@ async function loadPosts() {
     const container = document.getElementById('postsContainer');
     
     try {
-        const response = await fetch('http://localhost:5000/api/posts');
+        const response = await fetch(`${API_BASE}/posts`);
         const posts = await response.json();
         
         // Filter posts by category
@@ -341,7 +342,7 @@ async function loadDashboard() {
     const container = document.getElementById('myPostsContainer');
 
     try {
-        const response = await fetch('http://localhost:5000/api/posts');
+        const response = await fetch(`${API_BASE}/posts`);
         let posts = await response.json();
 
         // Filter posts that belong to the current user
@@ -352,7 +353,7 @@ async function loadDashboard() {
         const needDetails = userPosts.some(p => !Array.isArray(p.comments));
         if (needDetails && userPosts.length > 0) {
             const detailPromises = userPosts.map(p =>
-                fetch(`http://localhost:5000/api/posts/${p.id}`)
+                fetch(`${API_BASE}/posts/${postId}`)
                     .then(r => r.ok ? r.json() : null)
                     .catch(() => null)
             );
@@ -443,7 +444,7 @@ async function deletePost(postId) {
     
     try {
         // Correct API endpoint - use DELETE on /api/posts/{id}
-        const response = await fetch(`http://localhost:5000/api/posts/${postId}`, {
+        const response = await fetch(`${API_BASE}/posts/${postId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -469,7 +470,7 @@ async function showPost(postId) {
     currentPostId = postId;
     
     try {
-        const response = await fetch(`http://localhost:5000/api/posts/${postId}`);
+        const response = await fetch(`${API_BASE}/posts/${postId}`);
         const post = await response.json();
         
         const authorDisplay = post.is_anonymous ? 'Anonymous' : post.author_name || 'Anonymous';

@@ -9,6 +9,58 @@ import psycopg2
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 
+def create_tables():
+    """Create tables if they don't exist"""
+    conn = None
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        
+        # Create tables
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS users (
+                id SERIAL PRIMARY KEY,
+                name VARCHAR(100) NOT NULL,
+                email VARCHAR(255) UNIQUE NOT NULL,
+                password VARCHAR(255) NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS posts (
+                id SERIAL PRIMARY KEY,
+                title VARCHAR(255),
+                category VARCHAR(50) NOT NULL,
+                content TEXT NOT NULL,
+                timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                author_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+                is_anonymous BOOLEAN DEFAULT FALSE
+            )
+        """)
+        
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS comments (
+                id SERIAL PRIMARY KEY,
+                post_id INTEGER REFERENCES posts(id) ON DELETE CASCADE,
+                content TEXT NOT NULL,
+                timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                author_id INTEGER REFERENCES users(id) ON DELETE SET NULL
+            )
+        """)
+        
+        conn.commit()
+        print("✅ Tables created successfully!")
+        
+    except Exception as e:
+        print(f"Error creating tables: {e}")
+    finally:
+        if conn:
+            conn.close()
+
+# Call this when app starts
+create_tables()
+
 # --------------------------------------------------------------
 # App & Security Setup
 # --------------------------------------------------------------
