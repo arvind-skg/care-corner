@@ -1,6 +1,3 @@
-# --------------------------------------------------------------
-# backend/app.py
-# --------------------------------------------------------------
 import os
 from datetime import datetime
 from flask import Flask, request, jsonify
@@ -9,6 +6,35 @@ import psycopg2
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 
+app = Flask(__name__)
+CORS(app)   # allow frontend to call backend
+ph = PasswordHasher()
+
+# --------------------------------------------------------------
+# Database Helper
+# --------------------------------------------------------------
+def get_db_connection():
+    """
+    Returns a psycopg2 connection using the DATABASE_URL env var (for Railway)
+    or local credentials (for local development).
+    """
+    db_url = os.getenv('DATABASE_URL')
+    if db_url:
+        # Railway provides DATABASE_URL
+        return psycopg2.connect(db_url)
+    else:
+        # LOCAL only: change password to YOUR postgres password
+        print("Using local PostgreSQL connection. Make sure your local DB is running.")
+        return psycopg2.connect(
+            host='localhost',
+            database='care_corner',
+            user='postgres',
+            password='arvind28'  # <--- change this
+        )
+
+# --------------------------------------------------------------
+# Create tables if they don't exist
+# --------------------------------------------------------------
 def create_tables():
     """Create tables if they don't exist"""
     conn = None
@@ -16,7 +42,7 @@ def create_tables():
         conn = get_db_connection()
         cur = conn.cursor()
         
-        # Create tables
+        # Create users table
         cur.execute("""
             CREATE TABLE IF NOT EXISTS users (
                 id SERIAL PRIMARY KEY,
@@ -27,6 +53,7 @@ def create_tables():
             )
         """)
         
+        # Create posts table
         cur.execute("""
             CREATE TABLE IF NOT EXISTS posts (
                 id SERIAL PRIMARY KEY,
@@ -39,6 +66,7 @@ def create_tables():
             )
         """)
         
+        # Create comments table
         cur.execute("""
             CREATE TABLE IF NOT EXISTS comments (
                 id SERIAL PRIMARY KEY,
@@ -58,44 +86,17 @@ def create_tables():
         if conn:
             conn.close()
 
-# Call this when app starts
+# Call this once when the app starts
 create_tables()
 
 # --------------------------------------------------------------
-# App & Security Setup
+# Utility Functions
 # --------------------------------------------------------------
-app = Flask(__name__)
-# For local dev, allow all. For production, restrict to your Vercel frontend URL.
-# Example for production:
-# CORS(app, resources={r"/api/*": {"origins": ["https://your-care-corner-frontend.vercel.app"]}})
-CORS(app) # Broad CORS for easy setup, restrict later in production
-
-# Argon2 password hasher (high-security, memory-hard)
-ph = PasswordHasher()
-
-# --------------------------------------------------------------
-# Database Helper
-# --------------------------------------------------------------
-def get_db_connection():
-    """
-    Returns a psycopg2 connection using the DATABASE_URL env var (for Railway)
-    or local credentials (for local development).
-    """
-    db_url = os.getenv('DATABASE_URL')
-    if db_url:
-        # Railway (and most PaaS) provides DATABASE_URL in a format psycopg2 understands
-        return psycopg2.connect(db_url)
-    else:
-        # Fallback for local development if DATABASE_URL is not set
-        # IMPORTANT: Replace 'your_local_password' with your actual PostgreSQL password
-        print("Using local PostgreSQL connection. Make sure your local DB is running.")
-        return psycopg2.connect(
-            host='localhost',
-            database='care_corner',
-            user='postgres',
-            password='arvind28' # <--- CHANGE THIS FOR LOCAL DEV
-        )
-
+def format_timestamp(ts):
+    """Return ISO-8601 string (UTC) for JSON responses."""
+    if isinstance(ts, datetime):
+        return ts.isoformat()
+    return ts
 # --------------------------------------------------------------
 # Utility Functions
 # --------------------------------------------------------------
@@ -451,9 +452,5 @@ def add_comment(post_id):
 # Flask App Runner (for local development or Gunicorn on Railway)
 # --------------------------------------------------------------
 if __name__ == '__main__':
-    # Railway (and other PaaS) sets the PORT env var.
-    # We default to 5000 for local development.
     port = int(os.getenv('PORT', 5000))
-    # '0.0.0.0' makes the app accessible externally (e.g., from your phone on the same network)
-    # debug=False in production, but can be True for local dev (reloads on code changes)
     app.run(host='0.0.0.0', port=port, debug=True)
