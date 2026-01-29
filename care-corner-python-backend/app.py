@@ -15,22 +15,15 @@ ph = PasswordHasher()
 # --------------------------------------------------------------
 def get_db_connection():
     """
-    Returns a psycopg2 connection using the DATABASE_URL env var (for Railway)
-    or local credentials (for local development).
+    Local database connection.
+    Make sure these match your local PostgreSQL setup.
     """
-    db_url = os.getenv('DATABASE_URL')
-    if db_url:
-        # Railway provides DATABASE_URL
-        return psycopg2.connect(db_url)
-    else:
-        # LOCAL only: change password to YOUR postgres password
-        print("Using local PostgreSQL connection. Make sure your local DB is running.")
-        return psycopg2.connect(
-            host='localhost',
-            database='care_corner',
-            user='postgres',
-            password='arvind28'  # <--- change this
-        )
+    return psycopg2.connect(
+        host='localhost',
+        database='care_corner',
+        user='postgres',
+        password='arvind28'  # your actual local postgres password
+    )
 
 # --------------------------------------------------------------
 # Create tables if they don't exist
@@ -89,14 +82,7 @@ def create_tables():
 # Call this once when the app starts
 create_tables()
 
-# --------------------------------------------------------------
-# Utility Functions
-# --------------------------------------------------------------
-def format_timestamp(ts):
-    """Return ISO-8601 string (UTC) for JSON responses."""
-    if isinstance(ts, datetime):
-        return ts.isoformat()
-    return ts
+
 # --------------------------------------------------------------
 # Utility Functions
 # --------------------------------------------------------------
@@ -448,9 +434,6 @@ def add_comment(post_id):
         if 'cur' in locals() and cur: cur.close()
         if 'conn' in locals() and conn: conn.close()
 
-# --------------------------------------------------------------
-# Flask App Runner (for local development or Gunicorn on Railway)
-# --------------------------------------------------------------
+
 if __name__ == '__main__':
-    port = int(os.getenv('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
