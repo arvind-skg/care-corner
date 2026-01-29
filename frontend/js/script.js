@@ -1,10 +1,10 @@
 const API_BASE = 'http://localhost:5000/api';
-// Data storage
+
 let currentUser = null;
 let currentPostId = null;
 let selectedCategory = 'All';
 
-// Bad words filter
+
 const offensiveWords = [
     'stupid', 'idiot', 'dumb', 'hate', 'kill', 'die', 'loser', 'worthless', 
     'pathetic', 'ugly', 'fat', 'disgusting', 'retard', 'moron', 'failure',
@@ -19,47 +19,45 @@ function containsOffensiveLanguage(text) {
     });
 }
 
-// Initialize app
+
 document.addEventListener('DOMContentLoaded', function() {
     setupEventListeners();
     checkAuth();
 });
 
-// Setup all event listeners
 function setupEventListeners() {
-    // Theme toggle
+  
     document.getElementById('themeToggle').addEventListener('click', toggleTheme);
     
-    // Auth
+
     document.getElementById('loginForm').addEventListener('submit', handleLogin);
     document.getElementById('signupForm').addEventListener('submit', handleSignup);
     document.getElementById('showSignup').addEventListener('click', () => showPage('signup'));
     document.getElementById('showLogin').addEventListener('click', () => showPage('login'));
     document.getElementById('logoutBtn').addEventListener('click', handleLogout);
     
-    // Navigation
+
     document.getElementById('homeBtn').addEventListener('click', () => showPage('home'));
     document.getElementById('dashboardBtn').addEventListener('click', () => showPage('dashboard'));
     document.getElementById('newPostBtn').addEventListener('click', () => showPage('newPost'));
     document.getElementById('backBtn').addEventListener('click', () => showPage('home'));
     
-    // Category filter
+
     document.getElementById('categoryFilter').addEventListener('change', handleCategoryFilter);
     
-    // Forms
+
     document.getElementById('postForm').addEventListener('submit', handlePostSubmit);
     document.getElementById('commentForm').addEventListener('submit', handleCommentSubmit);
 }
 
-// Handle category filter
 function handleCategoryFilter(e) {
     selectedCategory = e.target.value;
     loadPosts();
 }
 
-// Check authentication
+
 async function checkAuth() {
-    // Try to get user from sessionStorage
+
     const storedUser = sessionStorage.getItem('user');
     if (storedUser) {
         currentUser = JSON.parse(storedUser);
@@ -69,7 +67,7 @@ async function checkAuth() {
     }
 }
 
-// Show app interface
+
 function showAppInterface() {
     document.getElementById('appHeader').style.display = 'block';
     document.getElementById('userMenu').classList.add('show');
@@ -77,13 +75,12 @@ function showAppInterface() {
     showPage('home');
 }
 
-// Hide app interface
 function hideAppInterface() {
     document.getElementById('appHeader').style.display = 'none';
     document.getElementById('userMenu').classList.remove('show');
 }
 
-// Handle login
+
 async function handleLogin(e) {
     e.preventDefault();
     
@@ -115,7 +112,7 @@ async function handleLogin(e) {
     }
 }
 
-// Handle signup
+
 async function handleSignup(e) {
     e.preventDefault();
     
@@ -148,7 +145,7 @@ async function handleSignup(e) {
     }
 }
 
-// Handle logout
+
 function handleLogout() {
     currentUser = null;
     sessionStorage.removeItem('user');
@@ -156,14 +153,14 @@ function handleLogout() {
     showPage('login');
 }
 
-// Theme toggle
+
 function toggleTheme() {
     document.body.classList.toggle('dark-mode');
     const isDark = document.body.classList.contains('dark-mode');
     document.querySelector('.theme-icon').textContent = isDark ? '☀️' : '🌙';
 }
 
-// Page navigation
+
 function showPage(page) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
@@ -188,7 +185,7 @@ function showPage(page) {
     }
 }
 
-// Handle post submission
+
 async function handlePostSubmit(e) {
     e.preventDefault();
     
@@ -231,7 +228,7 @@ async function handlePostSubmit(e) {
     }
 }
 
-// Handle comment submission
+
 async function handleCommentSubmit(e) {
     e.preventDefault();
     
@@ -242,8 +239,7 @@ async function handleCommentSubmit(e) {
         alert('Please enter a comment.');
         return;
     }
-    
-    // Check for offensive language
+
     if (containsOffensiveLanguage(content)) {
         warningDiv.innerHTML = '<div class="warning-message">Please be kind — hurtful or abusive comments are not allowed 💖</div>';
         setTimeout(() => {
@@ -270,7 +266,7 @@ async function handleCommentSubmit(e) {
         
         if (newComment.id) {
             document.getElementById('commentContent').value = '';
-            showPost(currentPostId); // Refresh the post to get updated comments
+            showPost(currentPostId); 
         } else {
             alert('Failed to add comment. Please try again.');
         }
@@ -280,7 +276,7 @@ async function handleCommentSubmit(e) {
     }
 }
 
-// Load posts
+
 async function loadPosts() {
     const container = document.getElementById('postsContainer');
     
@@ -288,13 +284,13 @@ async function loadPosts() {
         const response = await fetch(`${API_BASE}/posts`);
         const posts = await response.json();
         
-        // Filter posts by category
+  
         let filteredPosts = posts;
         if (selectedCategory !== 'All') {
             filteredPosts = posts.filter(p => p.category === selectedCategory);
         }
         
-        // Update post count
+        
         const countElement = document.getElementById('postCount');
         if (countElement) {
             countElement.textContent = `${filteredPosts.length} ${filteredPosts.length === 1 ? 'post' : 'posts'}`;
@@ -337,7 +333,7 @@ async function loadPosts() {
     }
 }
 
-// Load dashboard
+
 async function loadDashboard() {
     const container = document.getElementById('myPostsContainer');
 
@@ -345,11 +341,10 @@ async function loadDashboard() {
         const response = await fetch(`${API_BASE}/posts`);
         let posts = await response.json();
 
-        // Filter posts that belong to the current user
+        
         let userPosts = posts.filter(p => p.author_id === currentUser.user_id);
 
-        // If posts returned by /api/posts do not include comments, fetch details for each user post
-        // (This ensures we have comment arrays to read .length from)
+   
         const needDetails = userPosts.some(p => !Array.isArray(p.comments));
         if (needDetails && userPosts.length > 0) {
             const detailPromises = userPosts.map(p =>
@@ -365,7 +360,7 @@ async function loadDashboard() {
                 return p;
             });
         } else {
-            // ensure comments is an array for every post
+           
             userPosts = userPosts.map(p => { p.comments = p.comments || []; return p; });
         }
 
@@ -428,7 +423,7 @@ async function loadDashboard() {
     }
 }
 
-// Toggle comments visibility
+
 function toggleComments(postId) {
     const commentsDiv = document.getElementById(`comments-${postId}`);
     if (commentsDiv) {
@@ -436,14 +431,14 @@ function toggleComments(postId) {
     }
 }
 
-// Delete post
+
 async function deletePost(postId) {
     if (!confirm('Are you sure you want to delete this post? This action cannot be undone.')) {
         return;
     }
     
     try {
-        // Correct API endpoint - use DELETE on /api/posts/{id}
+        
         const response = await fetch(`${API_BASE}/posts/${postId}`, {
             method: 'DELETE',
             headers: {
@@ -452,7 +447,7 @@ async function deletePost(postId) {
         });
         
         if (response.status === 204) {
-            // Success - no content returned
+            
             loadDashboard();
             alert('Post deleted successfully!');
         } else {
@@ -464,7 +459,7 @@ async function deletePost(postId) {
         alert('Failed to connect to server. Please try again later.');
     }
 }
-// Show post detail
+
 async function showPost(postId) {
     const container = document.getElementById('postDetailContent');
     currentPostId = postId;
@@ -501,7 +496,7 @@ async function showPost(postId) {
     }
 }
 
-// Load comments
+
 function loadComments(comments) {
     const container = document.getElementById('commentsContainer');
     
@@ -518,7 +513,6 @@ function loadComments(comments) {
     `).join('') + `</div>`;
 }
 
-// Helper functions
 function getCategoryClass(category) {
     return 'category-' + category.toLowerCase().replace(/\s+/g, '-');
 }

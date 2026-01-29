@@ -7,12 +7,10 @@ from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 
 app = Flask(__name__)
-CORS(app)   # allow frontend to call backend
+CORS(app)   
 ph = PasswordHasher()
 
-# --------------------------------------------------------------
-# Database Helper
-# --------------------------------------------------------------
+
 def get_db_connection():
     """
     Local database connection.
@@ -22,7 +20,7 @@ def get_db_connection():
         host='localhost',
         database='care_corner',
         user='postgres',
-        password='arvind28'  # your actual local postgres password
+        password='arvind28'  
     )
 
 # --------------------------------------------------------------
@@ -35,7 +33,7 @@ def create_tables():
         conn = get_db_connection()
         cur = conn.cursor()
         
-        # Create users table
+       
         cur.execute("""
             CREATE TABLE IF NOT EXISTS users (
                 id SERIAL PRIMARY KEY,
@@ -46,7 +44,7 @@ def create_tables():
             )
         """)
         
-        # Create posts table
+        
         cur.execute("""
             CREATE TABLE IF NOT EXISTS posts (
                 id SERIAL PRIMARY KEY,
@@ -59,7 +57,7 @@ def create_tables():
             )
         """)
         
-        # Create comments table
+       
         cur.execute("""
             CREATE TABLE IF NOT EXISTS comments (
                 id SERIAL PRIMARY KEY,
@@ -79,7 +77,7 @@ def create_tables():
         if conn:
             conn.close()
 
-# Call this once when the app starts
+
 create_tables()
 
 
@@ -93,7 +91,7 @@ def format_timestamp(ts):
     return ts
 
 # --------------------------------------------------------------
-# 1️⃣ Authentication End-points (No changes here, already Argon2)
+# Authentication End-points (No changes here, already Argon2)
 # --------------------------------------------------------------
 @app.route('/api/register', methods=['POST'])
 def register_user():
@@ -106,7 +104,7 @@ def register_user():
         return jsonify({'success': False,
                         'message': 'Name, email and password are required'}), 400
 
-    # Hash the password with Argon2
+
     try:
         hashed_pw = ph.hash(password)
     except Exception as e:
@@ -190,7 +188,7 @@ def login_user():
         if 'conn' in locals() and conn: conn.close()
 
 # --------------------------------------------------------------
-# 2️⃣ Post Management End-points
+#  Post Management End-points
 # --------------------------------------------------------------
 @app.route('/api/posts', methods=['GET'])
 def get_posts():
@@ -299,7 +297,7 @@ def get_post_detail(post_id):
     conn = get_db_connection()
     cur = conn.cursor()
     try:
-        # Post data
+   
         cur.execute("""
             SELECT p.id, p.title, p.category, p.content,
                    p.timestamp, p.author_id, p.is_anonymous,
@@ -324,7 +322,7 @@ def get_post_detail(post_id):
             'author_name': post_row[7] if not post_row[6] else 'Anonymous'
         }
 
-        # Comments data
+        
         cur.execute("""
             SELECT c.id, c.content, c.timestamp, u.name AS author_name
             FROM comments c
@@ -339,7 +337,7 @@ def get_post_detail(post_id):
                 'id': cr[0],
                 'content': cr[1],
                 'timestamp': format_timestamp(cr[2]),
-                'author_name': cr[3] or 'Anonymous Friend' # Comments are always 'Anonymous Friend'
+                'author_name': cr[3] or 'Anonymous Friend' 
             })
         post['comments'] = comments
 
@@ -367,8 +365,7 @@ def delete_post(post_id):
             return jsonify({'success': False,
                             'message': 'Post not found'}), 404
         
-        # In a real app, you'd verify author_id == current_user_id
-        # For this simplified app, we allow deletion if post exists.
+  
         cur.execute("DELETE FROM posts WHERE id = %s", (post_id,))
         conn.commit()
         return jsonify({'success': True}), 204
@@ -381,9 +378,7 @@ def delete_post(post_id):
         if 'cur' in locals() and cur: cur.close()
         if 'conn' in locals() and conn: conn.close()
 
-# --------------------------------------------------------------
-# 3️⃣ Comment Management End-points
-# --------------------------------------------------------------
+
 @app.route('/api/posts/<int:post_id>/comments', methods=['POST'])
 def add_comment(post_id):
     """
@@ -405,7 +400,7 @@ def add_comment(post_id):
     conn = get_db_connection()
     cur = conn.cursor()
     try:
-        # Verify post exists
+ 
         cur.execute("SELECT id FROM posts WHERE id = %s", (post_id,))
         if not cur.fetchone():
             return jsonify({'success': False,
