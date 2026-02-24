@@ -1,5 +1,5 @@
-🌿 Care Corner
-Anonymous Peer Support Platform (Flask + PostgreSQL)
+**🌿 Care Corner
+Anonymous Peer Support Platform (Flask + PostgreSQL)**
 
 Care Corner is a secure, anonymous peer-support web platform designed for students and young adults to share thoughts, emotions, and personal concerns without fear of judgment.
 
